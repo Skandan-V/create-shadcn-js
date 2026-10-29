@@ -4,7 +4,7 @@
   "description": "Scaffold a Vite + React + shadcn/ui JavaScript project with zero manual configuration.",
   "type": "module",
   "bin": {
-    "create-shadcn-js": "./bin/cli.js"
+    "create-shadcn-js": "bin/cli.js"
   },
   "main": "./src/index.js",
   "exports": {
