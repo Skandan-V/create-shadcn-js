@@ -1,0 +1,54 @@
+{
+  "name": "create-shadcn-js",
+  "version": "1.0.0",
+  "description": "Scaffold a Vite + React + shadcn/ui JavaScript project with zero manual configuration.",
+  "type": "module",
+  "bin": {
+    "create-shadcn-js": "./bin/cli.js"
+  },
+  "main": "./src/index.js",
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node ./bin/cli.js",
+    "test": "node ./bin/cli.js --help"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Skandan-V/create-shadcn-js.git"
+  },
+  "keywords": [
+    "create-shadcn-js",
+    "shadcn",
+    "shadcn-ui",
+    "vite",
+    "react",
+    "javascript",
+    "jsx",
+    "tailwind",
+    "tailwindcss",
+    "cli",
+    "scaffold",
+    "clack"
+  ],
+  "author": "Skandan-V <skandan.studio4as@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Skandan-V/create-shadcn-js/issues"
+  },
+  "homepage": "https://github.com/Skandan-V/create-shadcn-js#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.9.1",
+    "commander": "^13.1.0",
+    "cross-spawn": "^7.0.6",
+    "fs-extra": "^11.3.0",
+    "picocolors": "^1.1.1"
+  }
+}
