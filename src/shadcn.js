@@ -2,7 +2,12 @@ import fs from "fs-extra"
 import path from "node:path"
 import * as p from "@clack/prompts"
 import pc from "picocolors"
-import { getPackageManagerCommands, runCommandSync, runCommandOutput } from "./utils.js"
+import {
+  getPackageManagerCommands,
+  runCommandSync,
+  runCommandOutput,
+  sanitizeDependencies,
+} from "./utils.js"
 import { getAppJsx } from "./templates/app.js"
 
 /**
@@ -89,7 +94,8 @@ export async function addComponents({ targetDir, packageManager, components = ["
 
   const pmCmds = getPackageManagerCommands(packageManager)
   try {
-    const [runnerBin, runnerArgs] = pmCmds.dlx("shadcn@latest", ["add", ...components, "-y"])
+    const safeComponents = sanitizeDependencies(components)
+  const [runnerBin, runnerArgs] = pmCmds.dlx("shadcn@latest", ["add", ...safeComponents, "-y"])
     runCommandOutput(runnerBin, runnerArgs, { cwd: targetDir })
     spinner.stop(`${pc.green("✔")} Added component(s): ${pc.cyan(components.join(", "))}`)
 

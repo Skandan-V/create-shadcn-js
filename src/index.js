@@ -6,7 +6,16 @@ import { Command } from "commander"
 import { runInteractivePrompts } from "./prompts.js"
 import { scaffoldProject } from "./scaffold.js"
 import { initShadcn, addComponents } from "./shadcn.js"
-import { runCommandOutput, formatPath } from "./utils.js"
+import {
+  runCommandOutput,
+  formatPath,
+  validateProjectName,
+  sanitizePackageManager,
+  sanitizeTailwindVersion,
+  sanitizeInitMode,
+  sanitizeBaseLibrary,
+  sanitizePreset,
+} from "./utils.js"
 
 // Package metadata
 const packageJson = fs.readJsonSync(
@@ -56,13 +65,22 @@ export async function run() {
   const args = program.args
   const opts = program.opts()
 
+  // Validate project name argument if supplied
+  if (args[0]) {
+    const valid = validateProjectName(args[0])
+    if (typeof valid === "string") {
+      p.cancel(`Invalid project name: ${valid}`)
+      process.exit(1)
+    }
+  }
+
   const cliOptions = {
     name: args[0],
-    pm: opts.pm,
-    tailwind: opts.tailwind,
-    mode: opts.mode,
-    base: opts.base,
-    preset: opts.preset,
+    pm: opts.pm ? sanitizePackageManager(opts.pm) : undefined,
+    tailwind: opts.tailwind ? sanitizeTailwindVersion(opts.tailwind) : undefined,
+    mode: opts.mode ? sanitizeInitMode(opts.mode) : undefined,
+    base: opts.base ? sanitizeBaseLibrary(opts.base) : undefined,
+    preset: opts.preset ? sanitizePreset(opts.preset) : undefined,
     sampleComponents: opts.sample === false ? false : undefined,
     git: opts.git === false ? false : undefined,
     force: opts.force || false,

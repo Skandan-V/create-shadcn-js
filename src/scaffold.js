@@ -2,7 +2,12 @@ import fs from "fs-extra"
 import path from "node:path"
 import * as p from "@clack/prompts"
 import pc from "picocolors"
-import { getPackageManagerCommands, runCommandSync, runCommandOutput } from "./utils.js"
+import {
+  getPackageManagerCommands,
+  runCommandSync,
+  runCommandOutput,
+  validateProjectName,
+} from "./utils.js"
 import {
   getJsConfig,
   getViteConfig,
@@ -25,6 +30,14 @@ export async function scaffoldProject({
 }) {
   const spinner = p.spinner()
 
+  const parentDir = path.dirname(targetDir)
+  const folderName = path.basename(targetDir)
+
+  const validation = validateProjectName(folderName)
+  if (typeof validation === "string") {
+    throw new Error(validation)
+  }
+
   // 1. Prepare directory
   if (fs.existsSync(targetDir)) {
     fs.emptyDirSync(targetDir)
@@ -35,9 +48,6 @@ export async function scaffoldProject({
   // 2. Scaffold Vite React JavaScript template
   spinner.start("Scaffolding Vite React JavaScript project...")
   try {
-    const parentDir = path.dirname(targetDir)
-    const folderName = path.basename(targetDir)
-
     // Run create-vite to generate template
     runCommandOutput(
       "npx",

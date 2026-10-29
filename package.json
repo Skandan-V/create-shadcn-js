@@ -1,21 +1,31 @@
 {
   "name": "create-shadcn-js",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Scaffold a Vite + React + shadcn/ui JavaScript project with zero manual configuration.",
   "type": "module",
   "bin": {
     "create-shadcn-js": "./bin/cli.js"
   },
   "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
   "files": [
     "bin",
     "src",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "SECURITY.md"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
   "scripts": {
     "start": "node ./bin/cli.js",
-    "test": "node ./bin/cli.js --help"
+    "test": "node ./bin/cli.js --help",
+    "audit": "npm audit --audit-level=high"
   },
   "repository": {
     "type": "git",
